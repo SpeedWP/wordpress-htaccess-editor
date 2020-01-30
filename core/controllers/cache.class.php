@@ -762,13 +762,13 @@ class Cache extends Controller implements Controller_Interface
 
                 // elete index file
                 $this->delete_index_file($module, $store_key, $hash);
-            } else {
-                $hash_file_path = $hash_path . $hash_file . $store['file_ext'];
             }
-
-            // delete cache file
-            $this->delete_hash_file($module, $store_key, $hash_file_path);
+        } else {
+            $hash_file_path = $hash_path . $hash_file . $store['file_ext'];
         }
+
+        // delete cache file
+        $this->delete_hash_file($module, $store_key, $hash_file_path);
 
         // delete file from database
         if ($deleteDB) {
@@ -1402,7 +1402,7 @@ class Cache extends Controller implements Controller_Interface
             }
         }
 
-        $params['return'] = $return_url;
+        $params['return'] = urlencode($return_url);
 
         return wp_nonce_url(add_query_arg($params, admin_url('admin.php')), 'flush', 'flush');
     }
